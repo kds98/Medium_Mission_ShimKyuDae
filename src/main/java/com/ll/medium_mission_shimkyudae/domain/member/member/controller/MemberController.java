@@ -1,5 +1,6 @@
 package com.ll.medium_mission_shimkyudae.domain.member.member.controller;
 
+import com.ll.medium_mission_shimkyudae.domain.member.member.entity.Member;
 import com.ll.medium_mission_shimkyudae.domain.member.member.service.MemberService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+
     @GetMapping("/join")
-    public String showJoin(){
+    public String showJoin() {
         return "domain/member/member/join";
     }
 
@@ -30,10 +32,12 @@ public class MemberController {
         private String password;
     }
 
-    @PostMapping("join")
+    @PostMapping("/join")
     public String join(@Valid JoinForm joinForm) {
-        memberService.join(joinForm.getUsername(), joinForm.getPassword());
+        Member member = memberService.join(joinForm.getUsername(), joinForm.getPassword());
 
-        return "redirect:/";
+        long id = member.getId();
+
+        return "redirect:/?msg=No %d member joined.".formatted(id);
     }
 }
