@@ -1,5 +1,7 @@
 package com.ll.medium_mission_shimkyudae.domain.member.member.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +18,14 @@ public class MemberController {
     }
 
     public static class JoinForm {
+        @NotBlank
         private String username;
+        @NotBlank
         private String password;
     }
 
     @PostMapping("join")
-    public String signup(JoinForm joinForm) {
+    public String signup(@Valid JoinForm joinForm) {
         return "redirect:/";
     }
 }
