@@ -63,6 +63,10 @@ public class Rq {
         return getUser() != null;
     }
 
+    public boolean isLogout() {
+        return !isLogin();
+    }
+
     public boolean isAdmin() {
         if(isLogout()) return false;
 
@@ -70,6 +74,10 @@ public class Rq {
                 .getAuthorities()
                 .stream()
                 .anyMatch(it ->
-                        it.getAuthority().equals("ROLE)ADMIN"));
+                        it.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    public void setAttribute(String key, Object value) {
+        request.setAttribute(key, value);
     }
 }
