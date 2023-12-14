@@ -9,10 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +43,16 @@ public class PostController {
         rq.setAttribute("page", page);
 
         return "domain/post/post/list";
+    }
+
+    @GetMapping("/write")
+    public String postWrite() {
+        return "domain/post/post/write";
+    }
+
+    @PostMapping("/write")
+    public String postWrite(@RequestParam(value = "subject") String title, @RequestParam(value="content") String body) {
+        this.postService.create(title, body);
+        return "redirect:/post/list";
     }
 }

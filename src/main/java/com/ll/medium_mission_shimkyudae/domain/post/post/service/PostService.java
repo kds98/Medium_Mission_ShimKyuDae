@@ -1,5 +1,6 @@
 package com.ll.medium_mission_shimkyudae.domain.post.post.service;
 
+import com.ll.medium_mission_shimkyudae.DataNotFoundException;
 import com.ll.medium_mission_shimkyudae.domain.member.member.entity.Member;
 import com.ll.medium_mission_shimkyudae.domain.post.post.entity.Post;
 import com.ll.medium_mission_shimkyudae.domain.post.post.repository.PostRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -39,5 +41,22 @@ public class PostService {
 
     public Page<Post> search(String kw, Pageable pageable) {
         return postRepository.findByTitleContainingIgnoreCaseOrBodyContainingIgnoreCase(kw, kw, pageable);
+    }
+
+    public Post getPost(Integer id) {
+        Optional<Post> post = this.postRepository.findById((long) id);
+        if (post.isPresent()) {
+            return post.get();
+        } else {
+            throw new DataNotFoundException("question not found");
+        }
+    }
+
+    public void create(String title, String body) {
+        Post post = new Post();
+        post.setTitle(title);
+        post.setBody(body);
+        post.setCreateDate(LocalDateTime.now());
+        this.postRepository.save(post);
     }
 }
