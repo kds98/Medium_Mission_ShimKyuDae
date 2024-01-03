@@ -33,7 +33,8 @@ public class Member {
     private LocalDateTime modifyDate;
     private String username;
     private String password;
-    private boolean isPaid;
+
+    private boolean isPaid = false;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -42,10 +43,6 @@ public class Member {
 
         if(List.of("system", "admin").contains(username)) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
-
-        if(isPaid) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_PAID"));
         }
 
         return authorities;
