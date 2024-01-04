@@ -1,9 +1,6 @@
 package com.ll.medium_mission_shimkyudae.domain.member.member.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -36,6 +33,8 @@ public class Member {
     private LocalDateTime modifyDate;
     private String username;
     private String password;
+
+    private boolean isPaid = false;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

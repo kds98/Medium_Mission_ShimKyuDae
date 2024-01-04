@@ -36,4 +36,5 @@ public class Post {
     private boolean isPublished;
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
+    private boolean isPaid;
 }
